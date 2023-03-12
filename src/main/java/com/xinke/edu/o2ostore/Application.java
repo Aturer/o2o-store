@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @MapperScan(basePackages = "com.xinke.edu.o2ostore.mapper")
-@ComponentScan(basePackages = {"com.xinke.edu.o2ostore.controller", "com.xinke.edu.o2ostore.service", "com.xinke.edu.o2ostore.util"})
+@ComponentScan(basePackages = {"com.xinke.edu.o2ostore.controller", "com.xinke.edu.o2ostore.service", "com.xinke.edu.o2ostore.util", "com.xinke.edu.o2ostore.config"})
 public class Application {
 
     public static void main(String[] args) {

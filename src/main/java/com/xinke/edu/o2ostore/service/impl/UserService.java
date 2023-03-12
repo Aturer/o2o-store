@@ -7,6 +7,7 @@ import com.xinke.edu.o2ostore.mapper.UserMapper;
 import com.xinke.edu.o2ostore.model.User;
 import com.xinke.edu.o2ostore.service.IUserService;
 import com.xinke.edu.o2ostore.util.MailHelper;
+import com.xinke.edu.o2ostore.util.MyTokenUtil;
 import com.xinke.edu.o2ostore.util.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -52,13 +53,16 @@ public class UserService implements IUserService {
     @Override
     public RestResponse<String> login(User user) {
         User user1 = null;
+        String token = null;
         if (StringUtils.hasLength(user.getPassword()) && StringUtils.hasLength(user.getAccount())) {
             QueryWrapper<User> wrapper = new QueryWrapper<>();
             wrapper.eq("account", user.getAccount());
             wrapper.eq("password", user.getPassword());
             user1 = userMapper.selectOne(wrapper);
+            log.info(user1.toString());
+            token = MyTokenUtil.sign(user1);
         }
-        return user1 != null ? RestResponse.ok("登录成功") : RestResponse.failed("登录失败,请检查账号密码是否正确");
+        return user1 != null ? RestResponse.ok(token, "登录成功") : RestResponse.failed("登录失败,请检查账号密码是否正确");
     }
 
     @Override
